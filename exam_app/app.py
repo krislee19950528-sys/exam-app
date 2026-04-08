@@ -1,5 +1,4 @@
 from flask import Flask, render_template, session, redirect, url_for, request
-from flask_session import Session  # 新增
 import json
 import random
 import os
@@ -7,13 +6,22 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-12345')
 
-# ---------- 配置服务端 Session ----------
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = '/tmp/flask_session'  # Render 可写目录
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_KEY_PREFIX'] = 'exam_'
-Session(app)
+# ---------- 尝试使用 Flask-Session（可选） ----------
+try:
+    from flask_session import Session
+    session_dir = '/tmp/flask_session'
+    os.makedirs(session_dir, exist_ok=True)
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SESSION_FILE_DIR'] = session_dir
+    app.config['SESSION_PERMANENT'] = False
+    app.config['SESSION_USE_SIGNER'] = True
+    app.config['SESSION_KEY_PREFIX'] = 'exam_'
+    Session(app)
+    print("Flask-Session 初始化成功")
+except ImportError:
+    print("Flask-Session 未安装，使用默认 Cookie Session")
+except Exception as e:
+    print(f"Flask-Session 初始化失败: {e}，使用默认 Cookie Session")
 
 # 题型配置
 QUESTION_CONFIG = {
