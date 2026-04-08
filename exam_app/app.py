@@ -1,4 +1,5 @@
 from flask import Flask, render_template, session, redirect, url_for, request
+from flask_session import Session  # 新增
 import json
 import random
 import os
@@ -6,7 +7,15 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-12345')
 
-# 题型配置：数量、每题分值
+# ---------- 配置服务端 Session ----------
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = '/tmp/flask_session'  # Render 可写目录
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_KEY_PREFIX'] = 'exam_'
+Session(app)
+
+# 题型配置
 QUESTION_CONFIG = {
     'single': {'count': 12, 'score': 5},
     'multiple': {'count': 5, 'score': 6},
@@ -15,7 +24,6 @@ QUESTION_CONFIG = {
 BANK_FILES = ['bank1.json', 'bank2.json', 'bank3.json', 'bank4.json']
 DATA_DIR = 'data'
 
-# 考生名单
 CANDIDATES = {
     '李光耀': '123456',
     '罗楷聪': '123456',
@@ -27,7 +35,6 @@ CANDIDATES = {
 }
 
 def load_all_questions():
-    """加载所有题库，返回按题型分类的题目池"""
     pool = {'single': [], 'multiple': [], 'text': []}
     for filename in BANK_FILES:
         path = os.path.join(DATA_DIR, filename)
@@ -37,7 +44,6 @@ def load_all_questions():
             bank = json.load(f)
             for q in bank['questions']:
                 q_type = q.get('type', 'single')
-                # 跳过实操题
                 if q_type == 'practical':
                     continue
                 if q_type in pool:
@@ -47,12 +53,9 @@ def load_all_questions():
     return pool
 
 def filter_true_multiples(questions):
-    """筛选出真正的多选题（答案包含多个字母）"""
-    true_multi = []
-    fake_multi = []
+    true_multi, fake_multi = [], []
     for q in questions:
         ans = q.get('answer', '').strip().upper()
-        # 去除可能的分隔符
         ans_clean = ans.replace(',', '').replace(' ', '')
         if len(ans_clean) > 1:
             true_multi.append(q)
@@ -61,33 +64,26 @@ def filter_true_multiples(questions):
     return true_multi, fake_multi
 
 def generate_paper():
-    """按配置抽取题目，多选题优先抽取真正的多选题"""
     pool = load_all_questions()
     selected = []
     
-    # 1. 处理单选题
     single_pool = pool.get('single', [])
     single_count = min(QUESTION_CONFIG['single']['count'], len(single_pool))
     if single_count > 0:
         selected.extend(random.sample(single_pool, single_count))
     
-    # 2. 处理多选题：优先从真正的多选题中抽取
     multi_pool = pool.get('multiple', [])
     true_multi, fake_multi = filter_true_multiples(multi_pool)
     target_multi = QUESTION_CONFIG['multiple']['count']
-    
-    # 优先抽真正的多选题
     if len(true_multi) >= target_multi:
         sampled_multi = random.sample(true_multi, target_multi)
     else:
-        # 真多选不够，先用完所有真多选，再从假多选（答案单选的）中补足
         sampled_multi = true_multi.copy()
         remaining = target_multi - len(sampled_multi)
         if remaining > 0 and fake_multi:
             sampled_multi.extend(random.sample(fake_multi, min(remaining, len(fake_multi))))
     selected.extend(sampled_multi)
     
-    # 3. 处理简答题
     text_pool = pool.get('text', [])
     text_count = min(QUESTION_CONFIG['text']['count'], len(text_pool))
     if text_count > 0:
@@ -112,12 +108,10 @@ def check_text(user_ans, keywords, full_score):
     matched = sum(1 for kw in keywords if kw.lower() in user_lower)
     return (matched / len(keywords)) * full_score
 
-# ---------- 错误处理 ----------
 @app.errorhandler(405)
 def method_not_allowed(e):
     return redirect(url_for('login'))
 
-# ---------- 路由 ----------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -142,7 +136,6 @@ def logout():
 def index():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    # 动态显示题型数量
     config = QUESTION_CONFIG
     return render_template('index.html',
                            candidate_name=session.get('candidate_name'),
@@ -158,7 +151,7 @@ def start_exam():
     if session.get(f'exam_done_{name}', False):
         return redirect(url_for('result'))
     if session.get('exam_started', False):
-        return redirect(url_for('submit'))
+        return redirect(url_for('exam'))
     
     paper = generate_paper()
     session['exam_paper'] = paper
