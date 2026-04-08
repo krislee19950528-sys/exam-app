@@ -78,10 +78,9 @@
 <body>
 <div class="container-fluid mt-3">
     <div class="row">
-        <!-- 左侧答题区 -->
         <div class="col-md-9">
             <h2>📋 考试试卷</h2>
-            <p>考生：<strong>{{ candidate_name }}</strong> | 本卷共20题：单选10道、多选8道、简答2道，满分100分。</p>
+            <p>考生：<strong>{{ candidate_name }}</strong> | 本卷共{{ questions|length }}题，满分100分。</p>
             <form id="examForm" method="post" action="/submit">
                 {% for q in questions %}
                 {% set outer_index = loop.index0 %}
@@ -124,7 +123,6 @@
             </form>
         </div>
         
-        <!-- 右侧答题卡与计时 -->
         <div class="col-md-3">
             <div class="sidebar">
                 <div class="timer-box" id="timerDisplay">30:00</div>
@@ -147,13 +145,11 @@
 </div>
 
 <script>
-    // 倒计时配置（30分钟）
     const TOTAL_SECONDS = 1800;
     let remainingSeconds = TOTAL_SECONDS;
     const timerKey = 'examRemainingTime';
     const startTimeKey = 'examStartTime';
     
-    // 防刷新/退出提示
     window.addEventListener('beforeunload', function(e) {
         return '您确定要离开吗？考试将自动提交。';
     });
@@ -207,29 +203,27 @@
         }
     }
     
+    // 核心：统计已答/未答数量
     function updateProgress() {
-        // 按题号统计，每道题只要有任何选项被选中或有文本输入，即算已答
         const questionCards = document.querySelectorAll('.question-card');
         const total = {{ questions|length }};
         let answered = 0;
         
         questionCards.forEach((card, idx) => {
-            const inputs = card.querySelectorAll('.answer-input');
+            // 检查该题是否有任何回答
+            const radios = card.querySelectorAll('input[type="radio"]');
+            const checkboxes = card.querySelectorAll('input[type="checkbox"]');
+            const textarea = card.querySelector('textarea');
+            
             let isAnswered = false;
-            for (let input of inputs) {
-                if (input.type === 'radio' || input.type === 'checkbox') {
-                    if (input.checked) {
-                        isAnswered = true;
-                        break;
-                    }
-                } else if (input.type === 'textarea') {
-                    if (input.value.trim() !== '') {
-                        isAnswered = true;
-                        break;
-                    }
-                }
-            }
-            // 更新对应题号按钮样式
+            // 单选：只要有一个被选中
+            radios.forEach(r => { if (r.checked) isAnswered = true; });
+            // 多选：只要有一个被选中
+            checkboxes.forEach(cb => { if (cb.checked) isAnswered = true; });
+            // 简答：内容非空
+            if (textarea && textarea.value.trim() !== '') isAnswered = true;
+            
+            // 更新答题卡按钮样式
             const btn = document.querySelector(`.q-btn[data-index="${idx}"]`);
             if (btn) {
                 if (isAnswered) {
@@ -247,36 +241,77 @@
     
     document.addEventListener('DOMContentLoaded', () => {
         initTimer();
-        updateProgress();
+        updateProgress();  // 初始化计数
         
         const form = document.getElementById('examForm');
         form.addEventListener('change', updateProgress);
         form.addEventListener('input', updateProgress);
         
-        form.addEventListener('submit', () => {
+        form.addEventListener('submit', (e) => {
+    // 计算未答题号
+    const questionCards = document.querySelectorAll('.question-card');
+    const total = {{ questions|length }};
+    const unanswered = [];
+    
+    questionCards.forEach((card, idx) => {
+        const radios = card.querySelectorAll('input[type="radio"]');
+        const checkboxes = card.querySelectorAll('input[type="checkbox"]');
+        const textarea = card.querySelector('textarea');
+        
+        let isAnswered = false;
+        radios.forEach(r => { if (r.checked) isAnswered = true; });
+        checkboxes.forEach(cb => { if (cb.checked) isAnswered = true; });
+        if (textarea && textarea.value.trim() !== '') isAnswered = true;
+        
+        if (!isAnswered) {
+            unanswered.push(idx + 1); // 题号从1开始显示
+        }
+    });
+    
+    if (unanswered.length > 0) {
+        e.preventDefault();
+        const message = `您还有 ${unanswered.length} 道题未作答：\n题号：${unanswered.join('、')}\n\n是否确认提交试卷？`;
+        if (confirm(message)) {
+            // 用户确认，继续提交
             localStorage.removeItem(timerKey);
             localStorage.removeItem(startTimeKey);
-        });
+            form.submit();
+        }
+        // 取消则什么都不做
+    } else {
+        // 全部已答，正常提交
+        localStorage.removeItem(timerKey);
+        localStorage.removeItem(startTimeKey);
+    }
+});
         
         window.addEventListener('scroll', highlightCurrentQuestion);
+        setTimeout(highlightCurrentQuestion, 100);
     });
     
     window.scrollToQuestion = function(index) {
         const el = document.getElementById(`q${index}`);
         if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            highlightCurrentQuestion();
+            setTimeout(highlightCurrentQuestion, 150);
         }
     };
     
     function highlightCurrentQuestion() {
         const cards = document.querySelectorAll('.question-card');
+        if (cards.length === 0) return;
+        
+        const viewportTop = window.scrollY;
         let currentIndex = -1;
-        const viewportMiddle = window.innerHeight / 3;
+        let minDistance = Infinity;
         
         cards.forEach((card, idx) => {
             const rect = card.getBoundingClientRect();
-            if (rect.top < viewportMiddle && rect.bottom > 0) {
+            const cardTop = rect.top + viewportTop;
+            const distance = Math.abs(cardTop - viewportTop - 100);
+            
+            if (distance < minDistance) {
+                minDistance = distance;
                 currentIndex = idx;
             }
         });
