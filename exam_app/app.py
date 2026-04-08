@@ -183,8 +183,15 @@ def submit():
     
     for idx, q in enumerate(paper):
         q_type = q.get('type', 'single')
-        user_ans = request.form.get(f'q_{idx}', '').strip()
         max_score = QUESTION_CONFIG[q_type]['score']
+        
+        # ---------- 修改：正确处理多选题的多个值 ----------
+        if q_type == 'multiple':
+            selected = request.form.getlist(f'q_{idx}')
+            user_ans = ''.join(sorted([v.strip().upper() for v in selected if v.strip()]))
+        else:
+            user_ans = request.form.get(f'q_{idx}', '').strip()
+        # ------------------------------------------------
         
         if q_type == 'single':
             is_correct = check_single(user_ans, q['answer'])
