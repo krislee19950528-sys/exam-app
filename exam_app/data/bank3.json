@@ -1,0 +1,162 @@
+{
+  "name": "题库三：前端脚手架与函数扩展",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "scored": true,
+      "question": "脚手架前端扩展脚本的命名规范？",
+      "options": [
+        "A. 应用编码_页面编码_VM.Extend.js",
+        "B. 引擎编码_页面编码_VM.Extend.js",
+        "C. 应用编码_页面编码_VMExtend.js",
+        "D. 引擎编码_页面编码_VMExtend.js"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "type": "multiple",
+      "scored": true,
+      "question": "卡片界面状态一共有哪些？",
+      "options": ["A. 新增态", "B. 编辑态", "C. 详情态", "D. 浏览态"],
+      "answer": "ABD"
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "scored": true,
+      "question": "获取卡片主表字段值的写法正确的是？",
+      "options": [
+        "A. viewModel.get(‘字段编码’)",
+        "B. viewModel.get(‘字段编码’).getValue()",
+        "C. viewModel.getValue(‘字段编码’)",
+        "D. viewModel.’字段编码’.getVaue()"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "scored": true,
+      "question": "设置卡片主表字段禁止编辑的命令正确的是？",
+      "options": [
+        "A. viewModel.get(‘字段编码’).setReadOnly(true)",
+        "B. viewModel.get(‘字段编码’).setReadOnly(false)",
+        "C. viewModel.get(‘字段编码’).setDisabled(true)",
+        "D. viewModel.get(‘字段编码’).setDisabled(false)"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "scored": true,
+      "question": "函数有哪几种？",
+      "options": ["A. 前端函数", "B. 后端函数", "C. API函数", "D. 显示函数"],
+      "answer": "ABC"
+    },
+    {
+      "id": 6,
+      "type": "multiple",
+      "scored": true,
+      "question": "下面哪些说法正确?",
+      "options": [
+        "A. 后端函数能扩展规则链",
+        "B. 后端函数能用于调度任务",
+        "C. 前端函数能通过debugger，快速定位代码行",
+        "D. 前端函数能调用后端函数"
+      ],
+      "answer": "ABC"
+    },
+    {
+      "id": 7,
+      "type": "multiple",
+      "scored": true,
+      "question": "给详情界面某个字段附值的方式有？",
+      "options": [
+        "A. 页面配置默认值",
+        "B. 页面规则设置",
+        "C. 脚手架扩展JS",
+        "D. 页面模板中脚本编辑里面设置"
+      ],
+      "answer": "ABCD"
+    },
+    {
+      "id": 8,
+      "type": "single",
+      "scored": true,
+      "question": "调度类型指定后端脚本实现时，调度类型创建时类型设置要设置哪些固定参数？",
+      "options": ["A. logId", "B. tenantId", "C. scriptCode", "D. param1"],
+      "answer": "C"
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "scored": true,
+      "question": "请阐述一下低代码函数之间互相调用的可行方案有哪些？",
+      "options": [],
+      "answer": "前端函数只可以调用API函数；后端函数与API函数之间可以相互调用",
+      "keywords": ["前端函数", "API函数", "后端函数", "相互调用", "只可调用"]
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "scored": true,
+      "question": "说明本地前端访问路径与标品预览访问路径的区别？",
+      "options": [],
+      "answer": "将https://v5devkk1.yonyoucloud.com/mdf-node修改为https://local.yonyoucloud.com:3003也可以进入本地启动的地址",
+      "keywords": ["本地访问", "标品预览", "local.yonyoucloud.com", "3003端口", "修改URL"]
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "scored": true,
+      "question": "如果卡片页面只有一个子表，前端扩展脚本中获取子表的模型的代码方式有哪些？",
+      "options": [],
+      "answer": "viewModel.getGridModel('xxx')、viewModel.getGridModel()",
+      "keywords": ["getGridModel", "子表", "模型", "viewModel"]
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "scored": true,
+      "question": "当后端脚本调用更新实体的方法报事务性错误时的解决方案是？",
+      "options": [],
+      "answer": "通过API脚本来实现更新实体的方法，通过后端脚本调用API脚本来转发可以规避错误",
+      "keywords": ["事务性错误", "API脚本", "更新实体", "转发", "规避"]
+    },
+    {
+      "id": 13,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题1】商品采购需求单，通过脚手架前端扩展脚本实现：1）新增时，录入状态默认手工录入枚举值为1，且该字段禁止编辑；2）编辑数据时，要求采购日期<=付款日期；3）子表选择物料参照时，将选择的物料的编码带入到当前行的物料编码字段。请简述实现思路。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    },
+    {
+      "id": 14,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题2】通过扩展按钮调用前端脚本调用API脚本实现获取当前登录用户的信息。请简述调用链路。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    },
+    {
+      "id": 15,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题3】通过后端函数的调度任务实现定时更新商品采购需求单的任意一条数据的币种信息。请简述配置与实现步骤。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    },
+    {
+      "id": 16,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题4】通过外面传参数，参数是卡片界面输入的币种数据，模糊查询传过来币种数据的所有记录。请简述前后端配合的实现方式。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "name": "题库二：后端开发与插件实战",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "scored": true,
+      "question": "后端编写客开单据的插件代码时，要继承的类是哪个？",
+      "options": [
+        "A. com.yonyou.ypd.bill.plugin.AbstractBillPlugin",
+        "B. com.yonyou.ypd.mdf.adapter.controller.BaseController",
+        "C. com.yonyou.ucf.mdd.ext.bill.rule.base.AbstractCommonRule",
+        "D. com.yonyou.ucf.mdd.ext.trans.itf.ISagaRule"
+      ],
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "scored": true,
+      "question": "关于后端插件@BillPlugin注解中的busiObj属性赋值描述正确的是？",
+      "options": ["A. 主实体编码", "B. 业务对象编码", "C. 页面编码", "D. 应用编码"],
+      "answer": "B"
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "scored": true,
+      "question": "为前端接口提供的controller入口类，规范中要求继承的类是？",
+      "options": [
+        "A. com.yonyou.ypd.bill.plugin.AbstractBillPlugin",
+        "B. com.yonyou.ypd.mdf.adapter.controller.BaseController",
+        "C. com.yonyou.ucf.mdd.ext.bill.rule.base.AbstractCommonRule",
+        "D. com.yonyou.ucf.mdd.ext.trans.itf.ISagaRule"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "scored": true,
+      "question": "service方法中保证事务一致性的注解是？",
+      "options": [
+        "A. @Slf4j",
+        "B. @Service",
+        "C. @Override",
+        "D. @Transactional(rollbackFor = Exception.class)"
+      ],
+      "answer": "D"
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "scored": true,
+      "question": "执行com.yonyou.iuap.yms.api.IYmsJdbcApi.remove(T vo)后，针对数据描述正确的是？",
+      "options": [
+        "A. 界面列表不展示删除的数据",
+        "B. 数据库表中已经不存在该条数据",
+        "C. 数据库表中依然存在此条数据，但是dr字段变更为1",
+        "D. 如果是主子表，主表dr变为1，子表的dr不会变更为1"
+      ],
+      "answer": "AC"
+    },
+    {
+      "id": 6,
+      "type": "multiple",
+      "scored": true,
+      "question": "com.yonyou.iuap.yms.param.VOStatus 中描述包含的变量有哪些?",
+      "options": ["A. UNCHANGED", "B. UPDATED", "C. NEW", "D. DELETED", "E. PROCESSING"],
+      "answer": "ABCDE"
+    },
+    {
+      "id": 7,
+      "type": "multiple",
+      "scored": true,
+      "question": "关于后端代码实现调度任务，描述正确的是？",
+      "options": [
+        "A. 可以同步执行，也可以异步执行",
+        "B. 返回结构中status为1时表示执行成功，为0时表示执行失败",
+        "C. 异步执行时，要通过callbackPlatform方法回调调度任务通知是否执行成功",
+        "D. 回调时，指定的id参数为调度类型上指定的参数，并非从请求头中获取的logId"
+      ],
+      "answer": "ABC"
+    },
+    {
+      "id": 8,
+      "type": "multiple",
+      "scored": true,
+      "question": "使用org.imeta.orm.schema.QuerySchema凭借查询字段或条件时，描述正确的是？",
+      "options": [
+        "A. 可以查询字段使用别名标注",
+        "B. 查询的字段输入的是表字段名",
+        "C. 可以查询对应参照的关联属性，如对应采购组织的名称、编码等信息",
+        "D. 获取返回结果时，优先通过别名字段获取，如果没有别名字段，则通过原始查询字段获取"
+      ],
+      "answer": "ACD"
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "scored": true,
+      "question": "描述MDF前端发送请求的两个方法分别是那两个，主要区别是？",
+      "options": [],
+      "answer": "viewmodel.setProxy：有ViewModel时的情况，框架自动处理domainKey参数；cb.rest.DynamicProxy：无ViewModel时的情况，需要自行传入domainKey参数（不推荐使用，需要补options.query参数）",
+      "keywords": ["viewmodel.setProxy", "cb.rest.DynamicProxy", "ViewModel", "domainKey", "自动处理", "自行传入"]
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "scored": true,
+      "question": "描述一下，前端调用后端请求的URL路径，对应后端controller的代码位置？",
+      "options": [],
+      "answer": "微服务+后端controller的 @RequestMapping() 地址 + @PostMapping() 地址",
+      "keywords": ["微服务", "@RequestMapping", "@PostMapping", "controller", "URL"]
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "scored": true,
+      "question": "后端代码如何获取租户ID信息？",
+      "options": [],
+      "answer": "InvocationInfoProxy.getTenantid()",
+      "keywords": ["InvocationInfoProxy", "getTenantid", "租户ID"]
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "scored": true,
+      "question": "简要描述：controller 和 service的任务分工（通常用来做什么使用比较合适）",
+      "options": [],
+      "answer": "Controller 只负责接收请求、返回结果；Service 只负责处理业务逻辑、数据操作",
+      "keywords": ["Controller", "接收请求", "返回结果", "Service", "业务逻辑", "数据操作"]
+    },
+    {
+      "id": 13,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题1】商品采购需求单详情界面添加按钮确认，来调整单据的确认状态字段为“已确认”。（要求利用后端的rest接口实现数据的变更）请简述实现思路。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    },
+    {
+      "id": 14,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题2】通过后端代码实践数据库API：根据fullName和QuerySchema查询本域数据返回弱类型、返回强类型、根据原生sql查询、新增、删除、根据id查询单据信息。请简述各类API的调用方式。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    },
+    {
+      "id": 15,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题3】定义一个调度任务，指定入参remark(字符串)：更新自建商品采购需求单（最新创建的单据）的备注字段为调度任务指定的remark参数对应的值。请简述实现步骤。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    },
+    {
+      "id": 16,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题4】通过后端插件实现校验需求单明细预算金额需大于0。请简述插件中如何实现该校验逻辑。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    }
+  ]
+}

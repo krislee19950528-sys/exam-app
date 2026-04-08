@@ -1,0 +1,145 @@
+{
+  "name": "题库四：YonBIP5 扩展开发与规则实战",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "scored": true,
+      "question": "用友 YonBIP5 扩展开发中，对标品扩展开发不包括以下哪项？",
+      "options": [
+        "A. 业务对象扩展增加业务属性字段",
+        "B. 直接删除原厂预置的核心业务字段",
+        "C. 扩展的子表（平行表）",
+        "D. 扩展的业务规则"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "scored": true,
+      "question": "私有云项目扩展 BIP 标品时，主表或子表字段扩展的优先方式是？",
+      "options": [
+        "A. 平行表扩展",
+        "B. 特征扩展",
+        "C. 自定义表扩展",
+        "D. 主表直接加字段"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "scored": true,
+      "question": "主表和平行表的关联关系是？",
+      "options": [
+        "A. 1:N",
+        "B. N:1",
+        "C. 1:1",
+        "D. N:N"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "scored": true,
+      "question": "原厂预置的按钮操作限制是？",
+      "options": [
+        "A. 可删除可修改",
+        "B. 不可删除，可修改执行命令",
+        "C. 不可删除，不可修改预置执行命令",
+        "D. 可删除，不可修改"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": 5,
+      "type": "single",
+      "scored": true,
+      "question": "规则扩展中，保存规则链的的表是对应领域对应scheme下的什么表？",
+      "options": [
+        "A. bill_base",
+        "B. billruleregister",
+        "C. md_meta_class",
+        "D. base_character"
+      ],
+      "answer": "B"
+    },
+    {
+      "id": 6,
+      "type": "multiple",
+      "scored": true,
+      "question": "以下属于用友 YonBIP5 常用开发扩展点的有?",
+      "options": [
+        "A. 实体扩展",
+        "B. 规则扩展",
+        "C. 页面扩展",
+        "D. 脚本扩展"
+      ],
+      "answer": "ABCD"
+    },
+    {
+      "id": 7,
+      "type": "multiple",
+      "scored": true,
+      "question": "元数据实体扩展的核心规则包括？",
+      "options": [
+        "A. 不可更改原厂实体",
+        "B. 实体只能被扩展一次",
+        "C. 扩展实体继承的原厂字段可查看不可修改删除",
+        "D. 可在扩展实体中新增字段"
+      ],
+      "answer": "ABCD"
+    },
+    {
+      "id": 8,
+      "type": "single",
+      "scored": true,
+      "question": "在脚手架中后端代码实现规则扩展，需要创建的规则类需要实现什么接口？",
+      "options": [
+        "A. AbstractBillPlugin",
+        "B. AbstractCommonRule",
+        "C. IYpdCommonRule",
+        "D. BaseController"
+      ],
+      "answer": "C"
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "scored": true,
+      "question": "简述用友 YonBIP5 中特征扩展和平行表扩展的适用场景区别？",
+      "options": [],
+      "answer": "1) 私有云项目扩展 BIP 标品：主表 / 子表字段扩展优先用特征扩展，特殊场景（多选参照、大字段、主实体新增子表）用平行表；2) 新功能设计或业务扩展时，主表字段过多可按业务拆分到平行表",
+      "keywords": ["特征扩展", "平行表扩展", "私有云", "优先", "多选参照", "大字段", "拆分"]
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "scored": true,
+      "question": "通过扩展平行表扩展标品开发的总体流程包含哪些核心步骤？",
+      "options": [],
+      "answer": "1）选择待扩展的原厂应用，新建扩展应用（打标 “扩” 区分自建应用）2）进行实体扩展，加平行表 3）对应领域的scheme下执行平行表建表语句 4）页面扩展开发",
+      "keywords": ["原厂应用", "扩展应用", "实体扩展", "平行表", "建表语句", "页面扩展"]
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "scored": true,
+      "question": "规则扩展支持哪些实现逻辑的扩展方式？",
+      "options": [],
+      "answer": "后端脚本、后端脚手架",
+      "keywords": ["后端脚本", "后端脚手架", "规则扩展"]
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "scored": true,
+      "question": "后端脚手架实现规则扩展的核心步骤有哪些？",
+      "options": [],
+      "answer": "1）开发规则扩展类，需要实现IYpdCommonRule接口（兼容模式需继承AbstractCommonRule）2）在execute方法中实现业务 3）在前端动作扩展中注册增加的规则，指定执行顺序以及服务域",
+      "keywords": ["IYpdCommonRule", "AbstractCommonRule", "execute方法", "注册规则", "执行顺序", "服务域"]
+    }
+  ]
+}

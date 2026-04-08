@@ -1,0 +1,122 @@
+{
+  "name": "题库一：YDS开发平台基础",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "scored": true,
+      "question": "一个业务对象能创建几个主实体？",
+      "options": ["A. 1", "B. 2", "C. 3", "D. 不受限制"],
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "type": "multiple",
+      "scored": true,
+      "question": "增加实体字段的时候，如果我想要引入参照，类型选择的时候，我应该选择什么？",
+      "options": ["A. 单选", "B. 多选", "C. 单选引用", "D. 多选应用"],
+      "answer": "CD"
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "scored": true,
+      "question": "实体的唯一标识是哪个字段？",
+      "options": ["A. 名称", "B. 编码", "C. 表名", "D. URI"],
+      "answer": "D"
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "scored": true,
+      "question": "创建实体的时候，引用接口勾选逻辑删除，系统属性默认会给我们增加什么字段？",
+      "options": ["A. ID", "B. DR", "C. CODE", "D. NAME"],
+      "answer": "B"
+    },
+    {
+      "id": 5,
+      "type": "single",
+      "scored": true,
+      "question": "创建实体的时候，引用接口勾选自动编码，系统属性默认会给我们增加什么字段？",
+      "options": ["A. ID", "B. DR", "C. CODE", "D. NAME"],
+      "answer": "C"
+    },
+    {
+      "id": 6,
+      "type": "single",
+      "scored": true,
+      "question": "我们下载脚手架的节点叫什么名字？",
+      "options": ["A. 应用构建", "B. 脚手架", "C. 应用引擎", "D. 应用脚手架"],
+      "answer": "C"
+    },
+    {
+      "id": 7,
+      "type": "single",
+      "scored": true,
+      "question": "脚手架对应的后端工程是以什么结尾？",
+      "options": ["A. –be", "B. _be", "C. -fe", "D. _fe"],
+      "answer": "B"
+    },
+    {
+      "id": 8,
+      "type": "single",
+      "scored": true,
+      "question": "脚手架对应的前端工程是以什么结尾？",
+      "options": ["A. –be", "B. _be", "C. -fe", "D. _fe"],
+      "answer": "C"
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "scored": true,
+      "question": "创建实体的时候，如果想要支持编码规则，除了引用接口勾选自动编码，还需要注意什么，或者说还需要在什么地方候选什么特性？",
+      "options": [],
+      "answer": "在对象建模-场景支持中勾选编码规则选项",
+      "keywords": ["对象建模", "场景支持", "编码规则", "勾选"]
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "scored": true,
+      "question": "枚举档案编码的后缀有什么要求？",
+      "options": [],
+      "answer": "产品为了区分标品预制枚举与客开枚举的冲突，统一要求客开创建的枚举编码以“_C”结尾",
+      "keywords": ["枚举编码", "_C", "后缀", "客开", "预制枚举"]
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "scored": true,
+      "question": "公共引擎和专有引擎（如客开春季培训），在创建实体的时候有什么区别或者说不需要输入什么？",
+      "options": [],
+      "answer": "核心区别在于公共引擎创建的实体，表名字是系统定义好的无法修改；在专业引擎创建的实体表名字需要自己手动指定",
+      "keywords": ["公共引擎", "专有引擎", "表名", "无法修改", "手动指定"]
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "scored": true,
+      "question": "YDS开发工具中，清除YMS缓存的命令是什么？",
+      "options": [],
+      "answer": "YDS:Clean；如果只想清楚前端缓存可以只勾选后面两项",
+      "keywords": ["YDS:Clean", "YMS缓存", "清除", "前端缓存"]
+    },
+    {
+      "id": 13,
+      "type": "text",
+      "scored": true,
+      "question": "对象建模中，某个字段的类型选择为日期时间，那么卡片界面保存之后展示的数据格式是什么？",
+      "options": [],
+      "answer": "yyyy-MM-dd HH:mm:ss",
+      "keywords": ["yyyy-MM-dd HH:mm:ss", "日期时间格式", "年月日时分秒"]
+    },
+    {
+      "id": 14,
+      "type": "practical",
+      "scored": false,
+      "question": "【实战题】商品采购需求单，完成对象建模和页面建模，需要达到卡片界面新增保存，列表界面能查询数据。请简述需要执行的关键步骤。",
+      "options": [],
+      "answer": "本题为实际操作题，无标准答案，请在系统环境中实际操作验证。"
+    }
+  ]
+}
